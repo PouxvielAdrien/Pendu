@@ -93,18 +93,16 @@ vie = 7
 
 
 ### Initialisation fenetre
-
-couleur = "#3c3e43"
 window = Tk()
 window.title("Pendu")
 window.geometry('600x300')
-window.configure(bg=couleur)
+window.configure(bg="#3c3e43")
 
 # mot à trouver/afficher
 mot_affiche=Label(window,text=Affichage(motAdeviner,lettredevinee),bg='red',fg="black",width=35)
 mot_affiche.pack()
 
-# indications
+# indications qu'on modifiera si lettre proposée a déjà été dites
 indications = Label(window,text="Entrez une lettre et appuyez sur Proposer",bg='red',fg="black")
 indications.pack()
 
@@ -113,8 +111,8 @@ lettres_dites = Label(window,text="Lettres déjà dites "+str(dites),bg='red',fg
 lettres_dites.pack()
 
 # pour entrer la lettre
-entry = Entry(window,width=30)
-entry.pack()
+entree = Entry(window,width=30)
+entree.pack()
 
 # pour valider la lettre
 """btn_valider = Button(window,text='Valider lettre',command=btn_press)"""
@@ -134,6 +132,77 @@ for i in range(1,9):
 photopendu=canvas.create_image(0,0,anchor='nw' , image=images[0])
 canvas.pack()
 
+"""
+
+def correspondance():
+    global motAdeviner,lettredevinee,gagne,perdu,vie,dites
+
+    lettre = entree.get()[0] #au cas où l'utilisateur rentre plusieurs lettres
+
+    if lettre in lettredevinee:
+        indications['text'] = "Lettre déjà trouvée"
+    else:
+        if lettre in motAdeviner:
+            lettredevinee+=[lettre]
+            indications['text'] = "Lettre trouvée"
+#            if motAdeviner==Affichage(motAdeviner,lettredevinee):
+#                gagne=True
+
+        elif lettre in dites :
+            indications['text'] = "Lettre déjà dite"
+        else:
+            
+            dites+=[lettre]
+            lettres_dites['text'] = 'Lettres testées '+str(dites)
+            vie-=1
+            indications['text'] = "Lettre proposée n'est pas bonne"
+
+    mot_affiche['text'] = Affichage(motAdeviner,lettredevinee)
+
+    if gagne :
+        victory()
+    else:
+        nouvelle_image(vie)
+        if vie==0:
+            loose()
 
 
+
+def nouvelle_image(vie):
+    Canevas.itemconfig(photopendu, image=images[essai])
+    nb_essais['text'] = "Essais restants : "+ str(7-essai)
+
+def game_over():
+    global echoue
+    echoue = True
+    btn_propose["text"] = 'Recommencer'
+    indices['text'] = "GAME OVER, le mot était "+mot
+    label_secondes['text'] = 'Votre meilleur score est de : '+strftime('%Mmin %Ssec',gmtime(meilleurscore))
+
+def you_win():
+    global meilleurscore
+    btn_propose["text"] = 'Recommencer'
+    indices['text'] = "Bravo !"
+
+    if (120 - secondes) < meilleurscore:
+        meilleurscore = 120 - secondes
+    label_secondes['text'] = 'Votre meilleur score est de : '+strftime('%Mmin %Ssec',gmtime(meilleurscore))
+
+def try_again():
+    global mot,reussi,trouve,essai,rate,secondes,echoue
+    reussi = False
+    echoue = False
+    mot = choice(L)
+    trouve = [mot[0]]
+    rate = []
+    essai = 0
+    change_bonhomme(essai)
+    btn_propose["text"] = 'Proposer lettre'
+    mot_affiche['text'] = write_devine_avec_espaces(mot,trouve)
+    indices['text'] = "Entrez une lettre et appuyez sur Proposer"
+    nb_essais['text'] = "Essais restants : 7"
+    lettres_testes['text'] = 'Lettres testées '+str(rate)
+    secondes = 120
+
+"""
 window.mainloop()
