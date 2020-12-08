@@ -1,57 +1,20 @@
 #Header
 """
+Ce programme permet via tkinter de jouer à une version du jeu Pendu
+Auteur : Adrien Pouxviel
+Il a été réalisé le 09/12/2020
+To Do : aspect graphique à améliorer
+
 Lien du git : https://github.com/PouxvielAdrien/Pendu
 """
-#importation des fonctions
+
+# Importation des fonctions
 from tkinter import Tk,Button,Entry,Label,Frame,Canvas,PhotoImage
 import random
+from Pendu import lectureDoc,Mot,Affichage
 
 
-
-#Recupère les mots
-def lectureDoc():
-    fichier = open("bankdeMot.txt","r", encoding="utf8")
-    listMOt = fichier.readlines()
-    fichier.close()
-    for i in range(len(listMOt)):
-        listMOt[i] = listMOt[i].rstrip("\n")
- 
-    listMOt.sort() #trie des éléments selon leur ordres alphabétiques
-    listMOt.sort(key=lambda element: len(element)) #trie des éléments selon leurs tailles
-    return listMOt
-
-
-
-
-#Définit aléatoirement le mot, letrre par lettre dans une liste
-def Mot(listeMot):
-    corresp = {"è":"e","é":"e","â":"a","ê":"e","ï":"i"}
-    i = random.randint(0, len(listeMot))
-    choix = listeMot[i]
-    lettredumot = []
-    for lt in choix:
-        if lt in corresp:
-            lettredumot.append(corresp[lt])
-        else:
-            lettredumot.append(lt)
-    return lettredumot
-
-
-#Affiche le mot avec _  pour les lettres non devinées
-def Affichage(motadeviner,lettreTestee):
-    lettredevine = []
-    for lettre in motadeviner:
-        if lettre in lettreTestee:
-            lettredevine.append(lettre)
-
-        else:
-            lettredevine.append("_")
-    return lettredevine
-
-
-
-
-###Initialisation du jeu
+### Initialisation du jeu
 vie = 7
 motAdeviner = Mot(lectureDoc())
 lettredevinee = [motAdeviner[0]] #liste des lettres devinées
@@ -60,7 +23,7 @@ gagne = False
 perdu = False
 
 
-
+# Fonction qui permet de relancer correspondance tant qu'on a pas perdu ou de relancer une autre partie si on a gagné ou perdu
 def envoyer():
 
     if boutton_valider['text'] == "Entrer une nouvelle lettre" :
@@ -71,37 +34,38 @@ def envoyer():
 
 
 
-### Initialisation fenetre
+### Initialisation fenêtre
 window = Tk()
 window.title("Pendu")
 window.geometry('600x500')
 window.configure(bg = "#3c3e43")
 
-# mot à trouver/afficher
+# Mot à trouver/afficher
 mot_affiche = Label(window,text = Affichage(motAdeviner,lettredevinee),bg = "#3c3e43",fg = "white",width = 35)
 mot_affiche.pack()
 
-# indications qu'on modifiera si lettre proposée a déjà été dites
+# Indications qu'on modifiera si la lettre proposée a déjà été dite
 indications = Label(window,text = "Entrer une lettre",bg = "#3c3e43",fg = "white")
 indications.pack()
 
-# lettres déjà dites
+# Lettres déjà dites
 lettres_dites = Label(window,text = "Lettres déjà dites "+str(dites),bg = "#3c3e43",fg = "white")
 lettres_dites.pack()
 
-# pour entrer la lettre
+# Entrer la lettre
 entree = Entry(window,width =30)
 entree.pack()
 
-# pour valider la lettre
+#Valider la lettre
 boutton_valider=Button(window,text = "Entrer une nouvelle lettre", bg ="white", fg ="black",command=envoyer)
 boutton_valider.pack()
 
-##Initialisation Images
+## Initialisation Images
 hauteur = 300
 largeur = 300
 canvas = Canvas(window,width = largeur,height = hauteur,bg = "#3c3e43",highlightthickness = 0)
-# on créer toutes les images du pendu
+
+# On importe les images du pendu
 images=[]
 for i in range(1,9):
     images.append(PhotoImage(file = "images/bonhomme" + str(i) + ".gif"))
@@ -110,13 +74,13 @@ images.reverse()
 photopendu=canvas.create_image(0,0,anchor = 'nw' , image=images[7])
 canvas.pack()
 
-#affichage nombre de vies
+# Affichage nombre de vies
 nbvies=Label(window,text = "Il vous reste 7 vies" ,bg='red',fg="black")
 nbvies.pack()
 
 
 
-###Fonctions du jeu 
+### Fonctions du jeu 
 
 def nouvelle_image(vie):
     canvas.itemconfig(photopendu, image = images[vie])
@@ -170,7 +134,7 @@ def correspondance():
 
 
 
-#fonction qui permet de relancer une partie mais la derniere lettre tapée doit etre effacée d'abbord
+# Fonction qui permet de relancer une partie mais la derniere lettre tapée doit etre effacée d'abbord
 def rejouer():
     global motAdeviner,lettredevinee,gagne,perdu,vie,dites
 
@@ -188,7 +152,7 @@ def rejouer():
     lettres_dites['text'] = 'Lettres déjà proposées '+str(dites)
 
 
-#A enlever si vous ne voulez pas tricher
+# A enlever si vous ne voulez pas tricher
 print(motAdeviner)
 
 window.mainloop()

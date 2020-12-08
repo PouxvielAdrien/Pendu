@@ -75,4 +75,3 @@ def FinDEPArtie(vie,motadeviner,lettreDejaDevine):
         valRen=False
         print("bien joué")
     return valRen   
-"""
