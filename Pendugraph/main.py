@@ -100,8 +100,40 @@ window.title("Pendu")
 window.geometry('600x300')
 window.configure(bg=couleur)
 
-# mot à trouver
+# mot à trouver/afficher
 mot_affiche=Label(window,text=Affichage(motAdeviner,lettredevinee),bg='red',fg="black",width=35)
 mot_affiche.pack()
+
+# indications
+indications = Label(window,text="Entrez une lettre et appuyez sur Proposer",bg='red',fg="black")
+indications.pack()
+
+# lettres déjà dites
+lettres_dites = Label(window,text="Lettres déjà dites "+str(dites),bg='red',fg="black")
+lettres_dites.pack()
+
+# pour entrer la lettre
+entry = Entry(window,width=30)
+entry.pack()
+
+# pour valider la lettre
+"""btn_valider = Button(window,text='Valider lettre',command=btn_press)"""
+boutton_valider=Button(window,text="Propser lettre", bg="white", fg="red", command=lambda:Affichage())
+boutton_valider.pack()
+
+##Initialisation Images
+hauteur=280
+largeur=280
+canvas = Canvas(window,width=largeur,height=hauteur,bg=couleur,highlightthickness=0)
+
+# on créer toutes les images du pendu
+images=[]
+for i in range(1,9):
+    images.append(PhotoImage(file="images/bonhomme"+str(i)+".gif"))
+
+photopendu=canvas.create_image(0,0,anchor='nw' , image=images[0])
+canvas.pack()
+
+
 
 window.mainloop()
