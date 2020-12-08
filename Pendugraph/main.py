@@ -43,11 +43,11 @@ def lettreU():
     
     return lettreUtilisateur.lower()
 
-#lettreU=Utilisateur()  
 
 
 
-#affiche le mot avec _  pour les lettres non devinées
+
+#Affiche le mot avec _  pour les lettres non devinées
 def Affichage(motadeviner,lettreTestee):
     lettredevine=[]
     for lettre in motadeviner:
@@ -57,26 +57,6 @@ def Affichage(motadeviner,lettreTestee):
         else:
             lettredevine.append("_")
     return lettredevine
-
-#print(Affichage(motAdeviner,motAdeviner[0]))
-
-
-"""
-def Correspondance(motadeviner,lettreTeste,trouvees,vie):
-    
-    if testUtilisateur in motDevine:     #testUtilisateur=lettre rentrée par lutilisateur
-        occurence= motDevine.count(testUtilisateur)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
-        for i in range(occurence):
-            Dites.append(testUtilisateur)
-        
-        Affichage(motDevine,Dites)    #Dites=lettres deja devinée
-        
-    else:
-        compteur=compteur-1
-        Affichage(motDevine,Dites)
-        print("il vous reste: ",compteur,' vies')
-    return Dites, compteur
-"""
 
 
 
@@ -90,7 +70,16 @@ perdu = False
 dites = [] # liste des lettres deja dites
 vie = 7
 
+def envoyer():
+    if boutton_valider['text'] == "Entrer une nouvelle lettre" :
+        correspondance()
+    elif boutton_valider['text'] == "Nouvelle partie" :
+        print('vous avez perdu')
+ #       rejouer()
+        
 
+#A enlever si vous ne voulez pas tricher
+print(motAdeviner)
 
 ### Initialisation fenetre
 window = Tk()
@@ -115,24 +104,47 @@ entree = Entry(window,width=30)
 entree.pack()
 
 # pour valider la lettre
-"""btn_valider = Button(window,text='Valider lettre',command=btn_press)"""
-boutton_valider=Button(window,text="Propser lettre", bg="white", fg="red", command=lambda:Affichage())
+boutton_valider=Button(window,text="Entrer une nouvelle lettre", bg="white", fg="red")
 boutton_valider.pack()
 
 ##Initialisation Images
 hauteur=280
 largeur=280
-canvas = Canvas(window,width=largeur,height=hauteur,bg=couleur,highlightthickness=0)
-
+canvas = Canvas(window,width=largeur,height=hauteur,bg="#3c3e43",highlightthickness=0)
 # on créer toutes les images du pendu
 images=[]
 for i in range(1,9):
     images.append(PhotoImage(file="images/bonhomme"+str(i)+".gif"))
+images.reverse()
 
 photopendu=canvas.create_image(0,0,anchor='nw' , image=images[0])
 canvas.pack()
 
-"""
+#affichage nombre de vies
+nbvies=Label(window,text="Il vous reste 7 vies" ,bg='red',fg="black")
+nbvies.pack
+
+
+
+
+
+def nouvelle_image(vie):
+    canvas.itemconfig(photopendu, image=images[vie])
+    nbvies['text'] = "Il vous reste  : "+ str(vie)
+
+def victory():
+ #   global meilleurscore
+    boutton_valider["text"] = "Nouvelle partie" 
+    indications['text'] = "Vous avez gagné"
+#Afficher meilleur score et le changer si noiveau meilleur score est mieux que lancien
+
+def loose():
+    global perdu
+    perdu = True
+    boutton_valider["text"] = "Nouvelle partie" 
+    indications['text'] = "C'est perdu ! Le mot à deviner était "+motAdeviner
+
+#meilleur score a afficher
 
 def correspondance():
     global motAdeviner,lettredevinee,gagne,perdu,vie,dites
@@ -159,36 +171,21 @@ def correspondance():
 
     mot_affiche['text'] = Affichage(motAdeviner,lettredevinee)
 
-    if gagne :
+    if gagne  :
         victory()
     else:
         nouvelle_image(vie)
         if vie==0:
             loose()
+        else : 
+            print('vous avez perdu')
+ #           rejouer()
 
 
 
-def nouvelle_image(vie):
-    Canevas.itemconfig(photopendu, image=images[essai])
-    nb_essais['text'] = "Essais restants : "+ str(7-essai)
 
-def game_over():
-    global echoue
-    echoue = True
-    btn_propose["text"] = 'Recommencer'
-    indices['text'] = "GAME OVER, le mot était "+mot
-    label_secondes['text'] = 'Votre meilleur score est de : '+strftime('%Mmin %Ssec',gmtime(meilleurscore))
-
-def you_win():
-    global meilleurscore
-    btn_propose["text"] = 'Recommencer'
-    indices['text'] = "Bravo !"
-
-    if (120 - secondes) < meilleurscore:
-        meilleurscore = 120 - secondes
-    label_secondes['text'] = 'Votre meilleur score est de : '+strftime('%Mmin %Ssec',gmtime(meilleurscore))
-
-def try_again():
+"""
+def rejouer():
     global mot,reussi,trouve,essai,rate,secondes,echoue
     reussi = False
     echoue = False
