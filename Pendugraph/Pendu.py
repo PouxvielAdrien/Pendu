@@ -1,8 +1,6 @@
 import random
 
-def test():
-    print("c est une test")
-
+#recupère les mots
 def lectureDoc():
     fichier=open("bankdeMot.txt","r", encoding="utf8")
     listMOt=fichier.readlines()
@@ -12,30 +10,51 @@ def lectureDoc():
 
     return listMOt
 
+
+
+#Définit le mot, letrre par lettre dans une liste
 def Mot(listeMot):
     corresp={"è":"e","é":"e","â":"a","ê":"e","ï":"i"}
     i=random.randint(0, len(listeMot))
     choix=listeMot[i]
-    lettre=[]
+    lettredumot=[]
     for lt in choix:
         if lt in corresp:
-            lettre.append(corresp[lt])
+            lettredumot.append(corresp[lt])
         else:
-            lettre.append(lt)
-    return lettre
+            lettredumot.append(lt)
+    return lettredumot
 
-def Affichage(mot, lettreDevine):
-    listeAffiche=[]
-    for lettre in mot:
-        if lettre in lettreDevine:
-            listeAffiche.append(lettre)
-        else:
-            listeAffiche.append("_")
-    return listeAffiche
+motAdeviner=Mot(lectureDoc())
+#print(motAdeviner)
 
+#utilisateur rentre une lettre
+def lettreU():  
+    lettreUtilisateur=input("choisir une lettre: ")
     
+    return lettreUtilisateur.lower()
+
+#lettreU=Utilisateur()  
+
+#affiche le mot avec _  pour les lettres non devinées
+def Affichage(motadeviner,lettreTestee):
+    lettredevine=[]
+    for lettre in motadeviner:
+        if lettre in lettreTestee:
+            lettredevine.append(lettre)
+
+        else:
+            lettredevine.append("_")
+    return lettredevine
+
+#print(Affichage(motAdeviner,lettreU()))
 
 
+#Initialisation du jeu
+
+
+
+"""
 def Correspondance(motDevine,testUtilisateur,Devine , compteur):
     listeAffiche=[]
     if testUtilisateur in motDevine:
@@ -51,6 +70,8 @@ def Correspondance(motDevine,testUtilisateur,Devine , compteur):
         return Devine, compteur,listeAffiche
 
 
+
+"""
 def FinDEPArtie(vie,motadeviner,lettreDejaDevine):
     valRen=True
     if vie==0:
@@ -60,6 +81,4 @@ def FinDEPArtie(vie,motadeviner,lettreDejaDevine):
         valRen=False
         print("bien joué")
     return valRen   
-
-
-
+"""

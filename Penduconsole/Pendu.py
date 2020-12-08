@@ -1,7 +1,5 @@
 import random
 
-def test():
-    print("c est une test")
 
 def lectureDoc():
     fichier=open("bankdeMot.txt","r", encoding="utf8")
@@ -16,13 +14,26 @@ def Mot(listeMot):
     corresp={"è":"e","é":"e","â":"a","ê":"e","ï":"i"}
     i=random.randint(0, len(listeMot))
     choix=listeMot[i]
-    lettre=[]
+    lettredumot=[]
     for lt in choix:
         if lt in corresp:
-            lettre.append(corresp[lt])
+            lettredumot.append(corresp[lt])
         else:
-            lettre.append(lt)
-    return lettre
+            lettredumot.append(lt)
+    return lettredumot
+
+
+motAdeviner=Mot(lectureDoc())
+#print(motAdeviner)
+
+#utilisateur rentre une lettre
+def Utilisateur():  
+    lettreUtilisateur=input("choisir une lettre: ")
+    
+    return lettreUtilisateur.lower()
+
+lettreU=Utilisateur()  
+
 
 def Affichage(mot, lettreDevine):
     
@@ -34,26 +45,26 @@ def Affichage(mot, lettreDevine):
     print('')
 
     
-def Utilisateur():
-    lettreUtilisateur=input("choisir une lettre: ")
-    
-    return lettreUtilisateur.lower()
 
 
+
+#motDevine=Mot(lectureDoc())    cest le mot à deviner
 def Correspondance(motDevine,testUtilisateur,Dites , compteur):
     
-    if testUtilisateur in motDevine:
-        occurence= motDevine.count(testUtilisateur)
+    if testUtilisateur in motDevine:     #testUtilisateur=lettre rentrée par lutilisateur
+        occurence= motDevine.count(testUtilisateur)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
         for i in range(occurence):
             Dites.append(testUtilisateur)
         
-        Affichage(motDevine,Dites)
+        Affichage(motDevine,Dites)    #Dites=lettres deja devinée
         
     else:
         compteur=compteur-1
         Affichage(motDevine,Dites)
         print("il vous reste: ",compteur,' vies')
     return Dites, compteur
+
+
 
 def FinDEPArtie(vie,motadeviner,lettreDejaDevine):
     valRen=True
@@ -64,6 +75,4 @@ def FinDEPArtie(vie,motadeviner,lettreDejaDevine):
         valRen=False
         print("bien joué")
     return valRen   
-
-
-
+"""
