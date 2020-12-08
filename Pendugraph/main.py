@@ -81,16 +81,16 @@ def Correspondance(motadeviner,lettreTeste,trouvees,vie):
 
 
 
-"""
+
 ###Initialisation du jeu
-L=lectureDoc()
-motAdeviner=Mot(L)
+motAdeviner=Mot(lectureDoc())
 lettredevinee=[motAdeviner[0]]
 gagne = False
 perdu = False
-dites = [] # liste des essais ratés
+dites = [] # liste des lettres deja dites
 vie = 7
-"""
+
+
 
 ### Initialisation fenetre
 
@@ -99,62 +99,9 @@ window = Tk()
 window.title("Pendu")
 window.geometry('600x300')
 window.configure(bg=couleur)
-window.mainloop()
 
-'''
 # mot à trouver
-mot_affiche=Label(Affichage(motAdeviner,lettredevinee),bg=couleur,fg="white",width=35)
+mot_affiche=Label(window,text=Affichage(motAdeviner,lettredevinee),bg='red',fg="black",width=35)
 mot_affiche.pack()
 
-
-
-
-mot_affiche.config(font=("Courier", 10))
-#mot_affiche.pack(side="left")
-mot_affiche.grid(row=1,column=1)
-
-
-# cadre gauche
-Cadre=Frame(window,relief="groove", bg=couleur)
-Cadre.grid(row=2,column=1)
-
-# indications
-indices = Label(window,text="Entrez une lettre et appuyez sur Proposer",bg=couleur,fg="cyan")
-indices.grid(row=3,column=1)
-
-
-# nb d'essais restants
-nb_essais = Label(window,text="Essais restants : 7",bg=couleur,fg="cyan")
-nb_essais.grid(row=3,column=1,sticky="S")
-
-# listes lettres
-lettres_testes = Label(window,text='Lettres testées '+str(rate),bg=couleur,fg="white")
-lettres_testes.grid(row=1,column=1,sticky='S')
-
-# pour entrer la lettre
-entry = Entry(Cadre)
-entry.grid(row=1,column=1)
-
-# pour valider la lettre
-btn_propose = Button(Cadre,text='Proposer lettre',command=btn_press)
-btn_propose.grid(row=1,column=2)
-
-#bouton quitter
-btnQuit = Button(window,text="Quitter le pendu",fg='red',command=window.destroy)
-btnQuit.grid(row=4,column=1)
-
-
-#imagependu
-hauteur=280
-largeur=280
-Canevas = Canvas(window,width=largeur,height=hauteur,bg=couleur,highlightthickness=0)
-
-images = []
-for i in range(1,9):
-    # on crée toutes les images du pendu
-    images.append(PhotoImage(file="gif//bonhomme"+str(i)+".gif"))
-
-# on affecte la première image
-imagependu= Canevas.create_image(hauteur/2,largeur/2,image=images[0])
-Canevas.grid(row=1,column=2,rowspan=4,padx=10,pady=10,sticky="E")
-'''
+window.mainloop()
