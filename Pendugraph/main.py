@@ -56,7 +56,7 @@ lettres_dites.pack()
 entree = Entry(window,width =30)
 entree.pack()
 
-#Valider la lettre
+# Valider la lettre
 boutton_valider=Button(window,text = "Entrer une nouvelle lettre", bg ="white", fg ="black",command=envoyer)
 boutton_valider.pack()
 
@@ -118,7 +118,7 @@ def correspondance():
                 victory()
 
         elif lettre in dites :
-            indications['text'] = "Lettres déjà dites"
+            indications['text'] = "Lettre déjà dite"
         else:
                 
             dites+=[lettre]
