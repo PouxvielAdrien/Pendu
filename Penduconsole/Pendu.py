@@ -59,36 +59,10 @@ def Utilisateur():
     return lettreUtilisateur.lower()
 
 
-"""
-def Correspondance(motAdeviner,testUtilisateur,lettredevine,compteur,dites):
-
-    if testUtilisateur in motAdeviner:     
-        occurence= motAdeviner.count(testUtilisateur)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
-        lettredevine+=testUtilisateur*occurence
-        print("Lettre trouvée")    
-        dites.append(testUtilisateur)
-        print("Les lettres que vous avez déjà dites sont : ", dites)
-
-    elif testUtilisateur in lettredevine :
-            print("Lettre déjà trouvée")
-    
-    elif testUtilisateur in dites :
-            print("Lettre déjà dite")
-        
-    else:
-        compteur=compteur-1
-        print("La lettre n'est pas bonne")
-        dites.append(testUtilisateur)
-        print("Les lettres que vous avez déjà dites sont : ", dites)
-        
-
-    return lettredevine, compteur, dites
-"""
 
 def jeu():
 
     partie = True
- #   meilleurScore = 0
     vie = 8
     document = lectureDoc()
     dites = []
@@ -105,9 +79,10 @@ def jeu():
             print('Vous avez perdu')
             
         elif len(lettredevine)==len(motAdeviner):
-            partie=False
             print("Vous avez gagné")
-            print("Le mot à deviner était : ", motAdeviner)
+            print("Vous avez deviné le mot : ", motAdeviner) 
+            partie=False
+
         else : 
             print("Le mot à deviner est : ", Affichage(motAdeviner,lettredevine))
             print("Il vous reste ",vie," vies")
@@ -119,8 +94,8 @@ def jeu():
             testU=Utilisateur()
 
             if testU in motAdeviner:     
-                occurence= motAdeviner.count(testU)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
-                lettredevine+=testU*occurence
+                occurence = motAdeviner.count(testU)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
+                lettredevine += testU*occurence
                 dites.append(testU)
                 print("Lettre trouvée")    
                 print("Les lettres que vous avez déjà dites sont : ", dites)
@@ -140,10 +115,21 @@ def jeu():
                 print("La lettre n'est pas bonne")
                 print("Les lettres que vous avez déjà dites sont : ", dites)
                 continuer = False
-                
-    print("au revoir")            
+
+
+    nouvellePartie = input('Voulez vous recommencer:(o/n): ')
+
+    if nouvellePartie.lower() == "n":
+        partie = False    
+        print("Au revoir")   
+
+    elif nouvellePartie.lower() == "o":
+        jeu()
+
+
+             
             
-jeu()
+
        
 
 
