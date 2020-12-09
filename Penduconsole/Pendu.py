@@ -1,20 +1,26 @@
-import random
+from random import randint
 
-
+# Recupère les mots
 def lectureDoc():
-    fichier=open("bankdeMot.txt","r", encoding="utf8")
-    listMOt=fichier.readlines()
+    fichier = open("bankdeMot.txt","r", encoding="utf8")
+    listMOt = fichier.readlines()
     fichier.close()
     for i in range(len(listMOt)):
-        listMOt[i]=listMOt[i].rstrip("\n")
-
+        listMOt[i] = listMOt[i].rstrip("\n")
+ 
+    listMOt.sort() #trie des éléments selon leur ordres alphabétiques
+    listMOt.sort(key=lambda element: len(element)) #trie des éléments selon leurs tailles
     return listMOt
 
+
+
+
+# Définit aléatoirement le mot, letrre par lettre dans une liste
 def Mot(listeMot):
-    corresp={"è":"e","é":"e","â":"a","ê":"e","ï":"i"}
-    i=random.randint(0, len(listeMot))
-    choix=listeMot[i]
-    lettredumot=[]
+    corresp = {"è":"e","é":"e","â":"a","ê":"e","ï":"i"}
+    i = randint(0, len(listeMot))
+    choix = listeMot[i]
+    lettredumot = []
     for lt in choix:
         if lt in corresp:
             lettredumot.append(corresp[lt])
@@ -23,55 +29,44 @@ def Mot(listeMot):
     return lettredumot
 
 
-motAdeviner=Mot(lectureDoc())
-#print(motAdeviner)
+# Affiche le mot avec des _  pour les lettres non devinées
+def Affichage(motAdeviner,lettreTestee):
+    lettredevine = []
+    for lettre in motAdeviner:
+        if lettre in lettreTestee:
+            lettredevine.append(lettre)
 
-#utilisateur rentre une lettre
-def Utilisateur():  
-    lettreUtilisateur=input("choisir une lettre: ")
-    
-    return lettreUtilisateur.lower()
-
-lettreU=Utilisateur()  
-
-
-def Affichage(mot, lettreDevine):
-    
-    for lettre in mot:
-        if lettre in lettreDevine:
-            print(lettre, end=" ")
         else:
-            print("_", end=" ")
-    print('')
-
+            lettredevine.append("_")
+    return lettredevine
     
 
 
 
-#motDevine=Mot(lectureDoc())    cest le mot à deviner
-def Correspondance(motDevine,testUtilisateur,Dites , compteur):
+
+def Correspondance(motAdeviner,testUtilisateur,lettresdevines , compteur):
     
-    if testUtilisateur in motDevine:     #testUtilisateur=lettre rentrée par lutilisateur
-        occurence= motDevine.count(testUtilisateur)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
-        for i in range(occurence):
-            Dites.append(testUtilisateur)
+    if testUtilisateur in motAdeviner:     
+        occurence= motAdeviner.count(testUtilisateur)  #compte le nombre de fois que la lettre rentrée est dans le mot a deviner
+        lettresdevines.append(testUtilisateur*occurence)
         
-        Affichage(motDevine,Dites)    #Dites=lettres deja devinée
+        Affichage(motAdeviner,lettresdevines)    
         
     else:
         compteur=compteur-1
-        Affichage(motDevine,Dites)
+        Affichage(motAdeviner,lettresdevines)
         print("il vous reste: ",compteur,' vies')
-    return Dites, compteur
+
+    return lettresdevines, compteur
 
 
 
-def FinDEPArtie(vie,motadeviner,lettreDejaDevine):
+def FinDepartie(vie,motAdeviner,lettreDejaDevine):
     valRen=True
     if vie==0:
         valRen= False
         print('loser')
-    elif len(motadeviner)== len(lettreDejaDevine):
+    elif len(motAdeviner)== len(lettreDejaDevine):
         valRen=False
         print("bien joué")
     return valRen   

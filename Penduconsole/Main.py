@@ -1,39 +1,50 @@
-import Pendu
+#Header
+"""
+Ce programme permet de jouer à une version du jeu Pendu sur console
+Auteur : Adrien Pouxviel
+Il a été réalisé le 08/12/2020
 
+Lien du git : https://github.com/PouxvielAdrien/Pendu
+"""
 
-partie=True
-meilleurScore=0
+# Importation des fonctions
 
-while partie:
+from Pendu import lectureDoc,Mot,Affichage,Correspondance,Utilisateur, FinDepartie
+
+### Initialisation du jeu
+partie = True
+meilleurScore = 0
+
+while partie :
     vie=8
-    dejaDevine=[]
-    continuer=True
-    document=Pendu.lectureDoc()
-    toutesLettres=[]
-    motADeviner=Pendu.Mot(document)
+    lettredevine = []
+    continuer = True
+    document = lectureDoc()
+    toutesLettres = []
+    motAdeviner = Mot(document)
 
-    dejaDevine, vie=Pendu.Correspondance(motADeviner,motADeviner[0], dejaDevine, vie)
+    lettredevine, vie = Correspondance(motAdeviner,motAdeviner[0], lettredevine, vie)
 
-    #print(motADeviner)
 
+# Définit la boucle pour continuer a jouer
     while continuer:
-        testU=Pendu.Utilisateur()
-        if testU not in toutesLettres:
+        testU = Utilisateur()
+        if testU not in toutesLettres :
             toutesLettres.append(testU)
-            dejaDevine, vie =Pendu.Correspondance(motADeviner,testU, dejaDevine, vie)
-            continuer=Pendu.FinDEPArtie(vie,motADeviner,dejaDevine)
+            lettredevine, vie = Correspondance(motAdeviner, testU, lettredevine, vie)
+            continuer = FinDepartie(vie, motAdeviner, lettredevine)
             print(toutesLettres)
         else:
-            print("la lettre a deja ete dite")  
+            print("La lettre a déjà été dite")  
             print(toutesLettres) 
     
-    if vie> meilleurScore:
+    if vie > meilleurScore:
         meilleurScore=vie
     
-    print("c'est fini")
-    print("le mot a deviner était: "+"".join(motADeviner))
-    nouvellePartie=input('voulez vous recommencer:(o/n): ')
-    if nouvellePartie.lower()=="n":
+    print("C'est fini")
+    print("Le mot à deviner était : " (motAdeviner))
+    nouvellePartie = input('Voulez vous recommencer:(o/n): ')
+    if nouvellePartie.lower() == "n":
         partie=False  
 
 print("merci bye")
