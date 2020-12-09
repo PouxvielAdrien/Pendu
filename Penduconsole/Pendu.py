@@ -1,3 +1,12 @@
+#Header
+"""
+Cette page contient les fonctions nécessaires pour jouer à une version du jeu Pendu sur console
+Auteur : Adrien Pouxviel
+Il a été réalisé le 08/12/2020
+
+Lien du git : https://github.com/PouxvielAdrien/Pendu
+"""
+
 from random import randint
 
 # Recupère les mots
@@ -41,6 +50,12 @@ def Affichage(motAdeviner,lettreTestee):
     return lettredevine
     
 
+
+# Utilisateur rentre une lettre
+def Utilisateur():  
+    lettreUtilisateur=input("choisir une lettre: ")
+    
+    return lettreUtilisateur.lower()
 
 
 
