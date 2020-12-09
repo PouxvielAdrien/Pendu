@@ -3,8 +3,8 @@
 Ce programme permet de jouer à une version du jeu Pendu sur console
 Auteur : Adrien Pouxviel
 Il a été réalisé le 08/12/2020
+To Do : Fonctionnalité meilleur score
 
-To Do : revoir pourquoi la fin du jeu console ne marche pas
 Lien du git : https://github.com/PouxvielAdrien/Pendu
 """
 

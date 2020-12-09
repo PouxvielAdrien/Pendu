@@ -1,3 +1,14 @@
+#Header
+"""
+Cette page contient les fonctions nécessaires pour jouer à une version du jeu Pendu sur tkinter
+Auteur : Adrien Pouxviel
+Il a été réalisé le 08/12/2020
+To Do : Ajouter la fonctionnalité meilleur score
+
+Lien du git : https://github.com/PouxvielAdrien/Pendu
+"""
+
+
 from random import randint
 
 # Recupère les mots
